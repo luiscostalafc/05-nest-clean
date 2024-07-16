@@ -2,6 +2,7 @@ import globals from "globals";
 import pluginJs from "@eslint/js";
 import tsParser from "@typescript-eslint/parser";
 import tsPlugin from "@typescript-eslint/eslint-plugin";
+import vitestGlobals from "eslint-plugin-vitest-globals";
 
 export default [
   {
@@ -19,10 +20,12 @@ export default [
   pluginJs.configs.recommended,
   {
     plugins: {
-      '@typescript-eslint': tsPlugin
+      '@typescript-eslint': tsPlugin,
+      'vitest-globals': vitestGlobals
     },
     rules: {
-      ...tsPlugin.configs.recommended.rules
+      ...tsPlugin.configs.recommended.rules,
+      'vitest-globals/all': 'error'
     }
   },
-];
+]
