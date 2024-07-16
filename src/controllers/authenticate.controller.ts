@@ -6,9 +6,9 @@ import {
   UsePipes,
 } from "@nestjs/common";
 import { z } from "zod";
-import { ZodValidationPipe } from "src/pipes/zod-validation";
+import { ZodValidationPipe } from "@/pipes/zod-validation";
 import { JwtService } from "@nestjs/jwt";
-import { PrismaService } from "src/prisma/prisma.service";
+import { PrismaService } from "@/prisma/prisma.service";
 import { compare } from "bcryptjs";
 
 const authenticateBodySchemaSchema = z.object({
