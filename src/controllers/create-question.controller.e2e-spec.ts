@@ -1,13 +1,15 @@
 import { AppModule } from "@/app.module";
 import { PrismaService } from "@/prisma/prisma.service";
 import { INestApplication } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
 import { Test } from "@nestjs/testing";
 import { hash } from "bcryptjs";
 import request from "supertest";
 
-describe("Authenticate (E2E)", () => {
+describe("Create question (E2E)", () => {
   let app: INestApplication;
   let prisma: PrismaService;
+  let jwt: JwtService;
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -17,12 +19,13 @@ describe("Authenticate (E2E)", () => {
     app = moduleRef.createNestApplication();
 
     prisma = moduleRef.get<PrismaService>(PrismaService);
+    jwt = moduleRef.get<JwtService>(JwtService);
 
     await app.init();
   });
 
-  test("[POST]/sessions", async () => {
-    await prisma.user.create({
+  test("[POST]/questions", async () => {
+    const user = await prisma.user.create({
       data: {
         name: "John Doe",
         email: "johdoe@example.com",
@@ -30,14 +33,24 @@ describe("Authenticate (E2E)", () => {
       },
     });
 
-    const response = await request(app.getHttpServer()).post("/sessions").send({
-      email: "johdoe@example.com",
-      password: "123456",
-    });
+    const accessToken = jwt.sign({ sub: user.id });
+
+    const response = await request(app.getHttpServer())
+      .post("/questions")
+      .set("Authorization", `Bearer ${accessToken}`)
+      .send({
+        title: "New question",
+        content: "Question content",
+      });
 
     expect(response.status).toBe(201);
-    expect(response.body).toEqual({
-      access_token: expect.any(String),
+
+    const questionDatabase = await prisma.question.findFirst({
+      where: {
+        title: "New question",
+      },
     });
+
+    expect(questionDatabase).toBeTruthy();
   });
 });
