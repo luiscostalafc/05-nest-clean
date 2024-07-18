@@ -1,10 +1,10 @@
-import { AppModule } from "@/app.module";
-import { PrismaService } from "@/prisma/prisma.service";
-import { INestApplication } from "@nestjs/common";
-import { Test } from "@nestjs/testing";
-import request from "supertest";
+import { AppModule } from '@/app.module';
+import { PrismaService } from '@/prisma/prisma.service';
+import { INestApplication } from '@nestjs/common';
+import { Test } from '@nestjs/testing';
+import request from 'supertest';
 
-describe("Create account (E2E)", () => {
+describe('Create account (E2E)', () => {
   let app: INestApplication;
   let prisma: PrismaService;
 
@@ -20,18 +20,18 @@ describe("Create account (E2E)", () => {
     await app.init();
   });
 
-  test("[POST]/accounts", async () => {
-    const response = await request(app.getHttpServer()).post("/accounts").send({
-      name: "John Doe",
-      email: "johdoe@example.com",
-      password: "123456",
+  test('[POST]/accounts', async () => {
+    const response = await request(app.getHttpServer()).post('/accounts').send({
+      name: 'John Doe',
+      email: 'johdoe@example.com',
+      password: '123456',
     });
 
     expect(response.status).toBe(201);
 
     const userOnDatabase = await prisma.user.findUnique({
       where: {
-        email: "johdoe@example.com",
+        email: 'johdoe@example.com',
       },
     });
 

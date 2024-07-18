@@ -1,10 +1,10 @@
-import { Body, Controller, Post, UseGuards, UsePipes } from "@nestjs/common";
-import { CurrentUser } from "@/auth/current-user-decorator";
-import { JwtAuthGuard } from "@/auth/jwt-auth.guard";
-import { UserPaylaod } from "@/auth/jwt.strategy";
-import { z } from "zod";
-import { ZodValidationPipe } from "@/pipes/zod-validation";
-import { PrismaService } from "@/prisma/prisma.service";
+import { Body, Controller, Post, UseGuards, UsePipes } from '@nestjs/common';
+import { CurrentUser } from '@/auth/current-user-decorator';
+import { JwtAuthGuard } from '@/auth/jwt-auth.guard';
+import { UserPaylaod } from '@/auth/jwt.strategy';
+import { z } from 'zod';
+import { ZodValidationPipe } from '@/pipes/zod-validation';
+import { PrismaService } from '@/prisma/prisma.service';
 
 const createQuestionBodySchema = z.object({
   title: z.string(),
@@ -15,7 +15,7 @@ const bodyValidationPipe = new ZodValidationPipe(createQuestionBodySchema);
 
 type CreateQuestionBodyInput = z.infer<typeof createQuestionBodySchema>;
 
-@Controller("/questions")
+@Controller('/questions')
 @UseGuards(JwtAuthGuard)
 export class CreateQuestionController {
   constructor(private prisma: PrismaService) {}
@@ -24,7 +24,7 @@ export class CreateQuestionController {
   @UsePipes()
   async handle(
     @Body(bodyValidationPipe) body: CreateQuestionBodyInput,
-    @CurrentUser() user: UserPaylaod
+    @CurrentUser() user: UserPaylaod,
   ) {
     const { title, content } = body;
     const userId = user.sub;
@@ -44,9 +44,9 @@ export class CreateQuestionController {
   private convertToSlug(title: string): string {
     return title
       .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/[^\w\s-]/g, "")
-      .replace(/\s+/g, "-");
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^\w\s-]/g, '')
+      .replace(/\s+/g, '-');
   }
 }
