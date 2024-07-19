@@ -1,7 +1,7 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
-import { AnswersRepository } from '../repositories/answers-repository';
+import { AnswersRepository } from '../interfaces/answers-repository';
 import { AnswerComment } from '../../enterprise/entities/answer-comment';
-import { AnswerCommentsRepository } from '../repositories/answer-comments-repository';
+import { AnswerCommentsRepository } from '../interfaces/answer-comments-repository';
 import { Either, right, left } from '@/core/either';
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
 

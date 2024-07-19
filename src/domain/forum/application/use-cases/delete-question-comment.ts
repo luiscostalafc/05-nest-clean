@@ -1,4 +1,4 @@
-import { QuestionCommentsRepository } from '../repositories/question-comments-repository';
+import { QuestionCommentsRepository } from '../interfaces/question-comments-repository';
 import { Either, right, left } from '@/core/either';
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
 import { NotAllowedError } from '@/core/errors/not-allowed-error';

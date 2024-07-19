@@ -1,5 +1,5 @@
 import { Either, left, right } from '@/core/either';
-import { AnswerCommentsRepository } from '../repositories/answer-comments-repository';
+import { AnswerCommentsRepository } from '../interfaces/answer-comments-repository';
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
 import { NotAllowedError } from '@/core/errors/not-allowed-error';
 
