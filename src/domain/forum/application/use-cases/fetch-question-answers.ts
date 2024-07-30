@@ -14,7 +14,7 @@ type FetchQuestionAnswersUseCaseResponse = Either<
   }
 >;
 
-export class FetchRecentQuestionsUseCase {
+export class FetchQuestionAnswersUseCase {
   constructor(private answersRepository: AnswersRepository) {}
 
   async execute({
