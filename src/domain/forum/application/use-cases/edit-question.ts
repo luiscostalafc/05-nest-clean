@@ -1,9 +1,9 @@
 import { Question } from '../../enterprise/entities/question';
-import { QuestionsRepository } from '../interfaces/questions-repository';
+import { QuestionsRepository } from '../repositories/questions-repository';
 import { Either, right, left } from '@/core/either';
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
 import { NotAllowedError } from '@/core/errors/not-allowed-error';
-import { QuestionAttachmentsRepository } from '../interfaces/question-attachments-repository';
+import { QuestionAttachmentsRepository } from '../repositories/question-attachments-repository';
 import { QuestionAttachmentList } from '../../enterprise/entities/question-attachment-list';
 import { QuestionAttachment } from '../../enterprise/entities/question-attachment';
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';

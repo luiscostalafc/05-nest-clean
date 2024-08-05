@@ -1,5 +1,5 @@
 import { PaginationParams } from '@/core/interfaces/pagination-params';
-import { QuestionCommentsRepository } from '@/domain/forum/application/interfaces/question-comments-repository';
+import { QuestionCommentsRepository } from '@/domain/forum/application/repositories/question-comments-repository';
 import { QuestionComment } from '@/domain/forum/enterprise/entities/question-comment';
 
 export class InMemoryQuestionCommentsRepository
