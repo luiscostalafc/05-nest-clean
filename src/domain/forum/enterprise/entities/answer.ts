@@ -34,7 +34,7 @@ export class Answer extends AggregateRoot<AnswerProps> {
     return this.props.createdAt;
   }
 
-  get updateAt() {
+  get updatedAt() {
     return this.props.updatedAt;
   }
 
