@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -20,9 +19,6 @@
     "paths": {
       "@/*": ["src/*"]
     },
-    "types": [
-      "vitest/globals",
-      "multer"
-    ]
+    "types": ["vitest/globals", "multer"]
   }
 }
