@@ -1,3 +1,9 @@
 {
-  "vitest.disableWorkspaceWarning": true
+  "vitest.disableWorkspaceWarning": true,
+  "files.watcherExclude": {
+    "**/dist/**": true
+  },
+  "files.exclude": {
+    "**/dist/**": true
+  }
 }
