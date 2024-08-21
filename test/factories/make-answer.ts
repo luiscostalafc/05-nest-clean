@@ -1,15 +1,16 @@
+import { faker } from '@faker-js/faker';
+
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { Answer, AnswerProps } from '@/domain/forum/enterprise/entities/answer';
-import { PrismaAnswerMapper } from '@/infra/database/prisma/mappers/prisma-answer-mapper';
-import { PrismaService } from '@/infra/database/prisma/prisma.service';
-import { faker } from '@faker-js/faker';
 import { Injectable } from '@nestjs/common';
+import { PrismaService } from '@/infra/database/prisma/prisma.service';
+import { PrismaAnswerMapper } from '@/infra/database/prisma/mappers/prisma-answer-mapper';
 
 export function makeAnswer(
   override: Partial<AnswerProps> = {},
   id?: UniqueEntityID,
 ) {
-  const question = Answer.create(
+  const answer = Answer.create(
     {
       authorId: new UniqueEntityID(),
       questionId: new UniqueEntityID(),
@@ -19,7 +20,7 @@ export function makeAnswer(
     id,
   );
 
-  return question;
+  return answer;
 }
 
 @Injectable()
