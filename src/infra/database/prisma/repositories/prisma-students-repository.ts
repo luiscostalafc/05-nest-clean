@@ -10,7 +10,9 @@ export class PrismaStudentsRepository implements StudentsRepository {
 
   async findByEmail(email: string): Promise<Student | null> {
     const student = await this.prisma.user.findUnique({
-      where: { email },
+      where: {
+        email,
+      },
     });
 
     if (!student) {

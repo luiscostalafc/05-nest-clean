@@ -1,4 +1,4 @@
-@baseUrl = 'http://localhost:3333'
+@baseUrl = http://localhost:3333
 @authToken = {{authenticate.response.body.access_token}}
 
 # @name create_account
@@ -6,9 +6,9 @@ POST {{baseUrl}}/accounts
 Content-Type: application/json
 
 {
-  "name": "João",
-	"email": "joao.com",
-	"password": "123456"
+  "name": "Diego Fernandes",
+  "email": "diego@rocketseat.com.br",
+  "password": "123456"
 }
 
 ###
@@ -18,20 +18,20 @@ POST {{baseUrl}}/sessions
 Content-Type: application/json
 
 {
-  "email": "joao.com",
+  "email": "diego@rocketseat.com.br",
   "password": "123456"
 }
 
 ###
 
-# @name create_questions
+# @name create_question
 POST {{baseUrl}}/questions
 Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 {
-  "title": "Nova pergunta",
-  "content": "Conteúdo da pergunta"
+  "title": "Nova pergunta 2",
+  "content": "Teste"
 }
 
 ###
@@ -40,4 +40,3 @@ Authorization: Bearer {{authToken}}
 GET {{baseUrl}}/questions?page=1
 Content-Type: application/json
 Authorization: Bearer {{authToken}}
-

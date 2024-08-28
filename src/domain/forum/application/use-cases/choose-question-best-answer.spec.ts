@@ -4,14 +4,18 @@ import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questions-repository';
 import { ChooseQuestionBestAnswerUseCase } from '@/domain/forum/application/use-cases/choose-question-best-answer';
 import { makeQuestion } from 'test/factories/make-question';
-import { NotAllowedError } from '@/core/errors/not-allowed-error';
+import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
 import { InMemoryAnswerAttachmentsRepository } from 'test/repositories/in-memory-answer-attachments-repository';
 import { InMemoryQuestionAttachmentsRepository } from 'test/repositories/in-memory-question-attachments-repository';
+import { InMemoryStudentsRepository } from 'test/repositories/in-memory-students-repository';
+import { InMemoryAttachmentsRepository } from 'test/repositories/in-memory-attachments-repository';
 
 let inMemoryAnswerAttachmentsRepository: InMemoryAnswerAttachmentsRepository;
 let inMemoryQuestionAttachmentsRepository: InMemoryQuestionAttachmentsRepository;
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository;
 let inMemoryAnswersRepository: InMemoryAnswersRepository;
+let inMemoryAttachmentsRepository: InMemoryAttachmentsRepository;
+let inMemoryStudentsRepository: InMemoryStudentsRepository;
 let sut: ChooseQuestionBestAnswerUseCase;
 
 describe('Choose Question Best Answer', () => {
@@ -20,8 +24,12 @@ describe('Choose Question Best Answer', () => {
       new InMemoryAnswerAttachmentsRepository();
     inMemoryQuestionAttachmentsRepository =
       new InMemoryQuestionAttachmentsRepository();
+    inMemoryAttachmentsRepository = new InMemoryAttachmentsRepository();
+    inMemoryStudentsRepository = new InMemoryStudentsRepository();
     inMemoryQuestionsRepository = new InMemoryQuestionsRepository(
       inMemoryQuestionAttachmentsRepository,
+      inMemoryAttachmentsRepository,
+      inMemoryStudentsRepository,
     );
     inMemoryAnswersRepository = new InMemoryAnswersRepository(
       inMemoryAnswerAttachmentsRepository,

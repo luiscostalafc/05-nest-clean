@@ -1,42 +1,42 @@
-import { InMemoryStudentRepository } from 'test/repositories/in-memory-students-repository';
+import { InMemoryStudentsRepository } from 'test/repositories/in-memory-students-repository';
 import { FakeHasher } from 'test/cryptography/fake-hasher';
 import { FakeEncrypter } from 'test/cryptography/fake-encrypter';
 import { AuthenticateStudentUseCase } from './authenticate-student';
 import { makeStudent } from 'test/factories/make-student';
 
-let inMemoryStudentRepository: InMemoryStudentRepository;
+let inMemoryStudentsRepository: InMemoryStudentsRepository;
 let fakeHasher: FakeHasher;
-let fakeEncrypter: FakeEncrypter;
+let encrypter: FakeEncrypter;
 
 let sut: AuthenticateStudentUseCase;
 
 describe('Authenticate Student', () => {
   beforeEach(() => {
-    inMemoryStudentRepository = new InMemoryStudentRepository();
+    inMemoryStudentsRepository = new InMemoryStudentsRepository();
     fakeHasher = new FakeHasher();
-    fakeEncrypter = new FakeEncrypter();
+    encrypter = new FakeEncrypter();
 
     sut = new AuthenticateStudentUseCase(
-      inMemoryStudentRepository,
+      inMemoryStudentsRepository,
       fakeHasher,
-      fakeEncrypter,
+      encrypter,
     );
   });
 
   it('should be able to authenticate a student', async () => {
     const student = makeStudent({
-      email: 'johdoe@example.com',
+      email: 'johndoe@example.com',
       password: await fakeHasher.hash('123456'),
     });
 
-    inMemoryStudentRepository.items.push(student);
+    inMemoryStudentsRepository.items.push(student);
 
     const result = await sut.execute({
-      email: 'johdoe@example.com',
+      email: 'johndoe@example.com',
       password: '123456',
     });
 
-    expect(result.isRight()).toBeTruthy();
+    expect(result.isRight()).toBe(true);
     expect(result.value).toEqual({
       accessToken: expect.any(String),
     });

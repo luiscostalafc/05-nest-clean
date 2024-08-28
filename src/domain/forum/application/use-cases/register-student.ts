@@ -1,7 +1,7 @@
+import { Either, left, right } from '@/core/either';
 import { Injectable } from '@nestjs/common';
 import { Student } from '../../enterprise/entities/student';
 import { StudentsRepository } from '../repositories/students-repository';
-import { Either, left, right } from '@/core/either';
 import { HashGenerator } from '../cryptography/hash-generator';
 import { StudentAlreadyExistsError } from './errors/student-already-exists-error';
 
@@ -13,7 +13,9 @@ interface RegisterStudentUseCaseRequest {
 
 type RegisterStudentUseCaseResponse = Either<
   StudentAlreadyExistsError,
-  { student: Student }
+  {
+    student: Student;
+  }
 >;
 
 @Injectable()
@@ -45,6 +47,8 @@ export class RegisterStudentUseCase {
 
     await this.studentsRepository.create(student);
 
-    return right({ student });
+    return right({
+      student,
+    });
   }
 }

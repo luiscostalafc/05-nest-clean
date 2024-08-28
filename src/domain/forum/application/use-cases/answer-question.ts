@@ -6,14 +6,19 @@ import { AnswerAttachment } from '../../enterprise/entities/answer-attachment';
 import { AnswerAttachmentList } from '../../enterprise/entities/answer-attachment-list';
 import { Injectable } from '@nestjs/common';
 
-interface AnswerAnswerUseCaseRequest {
+interface AnswerQuestionUseCaseRequest {
   authorId: string;
   questionId: string;
-  content: string;
   attachmentsIds: string[];
+  content: string;
 }
 
-type AnswerAnswerUseCaseResponse = Either<null, { answer: Answer }>;
+type AnswerQuestionUseCaseResponse = Either<
+  null,
+  {
+    answer: Answer;
+  }
+>;
 
 @Injectable()
 export class AnswerQuestionUseCase {
@@ -24,11 +29,11 @@ export class AnswerQuestionUseCase {
     questionId,
     content,
     attachmentsIds,
-  }: AnswerAnswerUseCaseRequest): Promise<AnswerAnswerUseCaseResponse> {
+  }: AnswerQuestionUseCaseRequest): Promise<AnswerQuestionUseCaseResponse> {
     const answer = Answer.create({
+      content,
       authorId: new UniqueEntityID(authorId),
       questionId: new UniqueEntityID(questionId),
-      content,
     });
 
     const answerAttachments = attachmentsIds.map((attachmentId) => {

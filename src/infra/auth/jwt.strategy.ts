@@ -4,16 +4,16 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { z } from 'zod';
 import { EnvService } from '../env/env.service';
 
-const userPaylaodSchema = z.object({
+const tokenPayloadSchema = z.object({
   sub: z.string().uuid(),
 });
 
-export type UserPayload = z.infer<typeof userPaylaodSchema>;
+export type UserPayload = z.infer<typeof tokenPayloadSchema>;
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor(env: EnvService) {
-    const publicKey = env.get('JWT_PUBLIC_KEY');
+  constructor(config: EnvService) {
+    const publicKey = config.get('JWT_PUBLIC_KEY');
 
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -23,6 +23,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: UserPayload) {
-    return userPaylaodSchema.parse(payload);
+    return tokenPayloadSchema.parse(payload);
   }
 }

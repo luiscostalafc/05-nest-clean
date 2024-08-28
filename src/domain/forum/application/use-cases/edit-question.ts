@@ -1,11 +1,11 @@
-import { Question } from '../../enterprise/entities/question';
+import { Either, left, right } from '@/core/either';
+import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
+import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
+import { Question } from '@/domain/forum/enterprise/entities/question';
 import { QuestionsRepository } from '../repositories/questions-repository';
-import { Either, right, left } from '@/core/either';
-import { ResourceNotFoundError } from '@/core/errors/resource-not-found-error';
-import { NotAllowedError } from '@/core/errors/not-allowed-error';
-import { QuestionAttachmentsRepository } from '../repositories/question-attachments-repository';
-import { QuestionAttachmentList } from '../../enterprise/entities/question-attachment-list';
-import { QuestionAttachment } from '../../enterprise/entities/question-attachment';
+import { QuestionAttachmentsRepository } from '@/domain/forum/application/repositories/question-attachments-repository';
+import { QuestionAttachmentList } from '@/domain/forum/enterprise/entities/question-attachment-list';
+import { QuestionAttachment } from '@/domain/forum/enterprise/entities/question-attachment';
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { Injectable } from '@nestjs/common';
 
@@ -18,8 +18,10 @@ interface EditQuestionUseCaseRequest {
 }
 
 type EditQuestionUseCaseResponse = Either<
-  NotAllowedError | ResourceNotFoundError,
-  { question: Question }
+  ResourceNotFoundError | NotAllowedError,
+  {
+    question: Question;
+  }
 >;
 
 @Injectable()
@@ -62,9 +64,9 @@ export class EditQuestionUseCase {
 
     questionAttachmentList.update(questionAttachments);
 
+    question.attachments = questionAttachmentList;
     question.title = title;
     question.content = content;
-    question.attachments = questionAttachmentList;
 
     await this.questionsRepository.save(question);
 
